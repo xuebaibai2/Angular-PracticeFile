@@ -4,11 +4,20 @@
 var myApp = angular
             .module("myModule", [])
             .controller("myController", function ($scope) {
-                var countries = [
-                    { name: "UK", cities: [{ name: "London" }, { name: "Manchester" }, { name: "Birmingham" }] },
-                    { name: "USA", cities: [{ name: "LA" }, { name: "Chicago" }, { name: "New York" }] },
-                    { name: "China", cities: [{ name: "Beijing" }, { name: "Jilin" }, { name: "Yanji" }] },
+                var technologies = [
+                { name: "C#", likes: 0, dislikes: 0 },
+                { name: "Java", likes: 0, dislikes: 0 },
+                { name: "Node.js", likes: 0, dislikes: 0 },
+                { name: "Swift", likes: 0, dislikes: 0 },
                 ];
 
-                $scope.countries = countries;
+                $scope.technologies = technologies;
+
+                $scope.incrementLikes = function (technology) {
+                    technology.likes++;
+                }
+
+                $scope.incrementDislikes = function (technology) {
+                    technology.dislikes++;
+                }
             });
