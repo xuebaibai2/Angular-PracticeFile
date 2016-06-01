@@ -10,28 +10,19 @@
     <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>
-    <!--Select View: <select ng-model="employeeView">
-    <option value="employeeTable.html">Table</option>
-    <option value="employeeList.html">List</option>
-    </select>
-    <div ng-include="employeeView"></div>-->
-    <table>
-        <thead>
-            <tr>
-                <td>Id</td>
-                <td>Name</td>
-                <td>Gender</td>
-                <td>Salary</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="em in employees">
-                <td>{{em.id}}</td>
-                <td>{{em.name}}</td>
-                <td>{{em.gender}}</td>
-                <td>{{em.salary}}</td>
-            </tr>
-        </tbody>
-    </table>
+<table>
+    <tr>
+        <td>Your String</td>
+        <td><input type="text" ng-model="input"/></td>
+    </tr>
+    <tr>
+        <td>Result</td>
+        <td><input type="text" ng-model="output" /></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="button" ng-click="transformString(input)" value="Process String"/></td>
+    </tr>
+</table>
 </body>
 </html>
