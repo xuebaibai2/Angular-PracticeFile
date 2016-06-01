@@ -4,5 +4,10 @@
 var myApp = angular
             .module("myModule", [])
             .controller("myController", function ($scope) {
-                $scope.message = "Hello, Angular"
+                var employee = {
+                    firstName: "Cayden",
+                    lastName: "Li",
+                    gender: "Male"
+                };
+                $scope.employee = employee;
             });
