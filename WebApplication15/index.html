@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html ng-app="myModule"  ng-controller="myController">
+<head>
+    <title>Index</title>
+    <meta charset="utf-8" />
+    <!--<script src="Scripts/angular.min.js"></script>-->
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/script.js"></script>
+</head>
+<body>
+    <div>
+        10 + 20 = {{ {name: 'David', age:'99'}.name  }}
+    </div>
+    <div>
+        40 + 50 = {{40 + 50}}
+    </div>
+    <div>
+        {{message}}
+    </div>
+    <div>
+        {{employee.firstName + " " + employee.lastName + " is a "+employee.gender }}
+    </div>
+
+    <div>
+        <img ng-src={{pic.img}} height="100" width="200"/>
+    </div>
+</body>
+</html>
