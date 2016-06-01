@@ -8,7 +8,12 @@
     <script src="Scripts/script.js"></script>
 </head>
 <body>
-    Rows to display: <input type="number" step="1" min="0" max="5" ng-model="rowLimit" />
+    Order By: <select ng-model="sortColumn">
+                  <option value="name">Name ASC</option>
+                  <option value="gender">Gender ASC</option>
+                  <option value="dateOfBirth">Date of Birth ASC</option>
+                  <option value="salary">Salary ASC</option>
+    </select>
     <table>
         <thead>
             <tr>
@@ -20,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="em in employees | limitTo:rowLimit">
+            <tr ng-repeat="em in employees | orderBy:sortColumn">
                 <td>{{em.name | uppercase}}</td>
                 <td>{{em.dateOfBirth | date:"dd/MM/yyyy"}}</td>
                 <td>{{em.gender | lowercase}}</td>
