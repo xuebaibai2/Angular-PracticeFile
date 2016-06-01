@@ -10,11 +10,11 @@
 <body>
 
     <ul>
-        <li ng-repeat="ct in countries">
-            {{ct.name}}
+        <li ng-repeat="ct in countries" ng-init="parentIndex=$index">
+            {{ct.name}} - Index = {{$index}}
             <ul>
                 <li ng-repeat="city in ct.cities">
-                    {{city.name}}
+                    {{city.name}} - Parent Index = {{parentIndex}}, Index = {{$index}}
                 </li>
             </ul>
         </li>
