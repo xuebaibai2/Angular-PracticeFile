@@ -10,14 +10,15 @@
     <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>
-    
+    <input type="checkbox" ng-model="hideSalary" />Hide Salary
     <table>
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Date of Birth</th>
                 <th>Gender</th>
-                <th>Salary</th>
+                <th ng-hide="hideSalary">Salary</th>
+                <th ng-show="hideSalary">Salary</th>
                 <th>City</th>
 
             </tr>
@@ -26,8 +27,9 @@
             <tr ng-repeat="em in employees">
                 <td>{{em.name}}</td>
                 <td>{{em.dateOfBirth | date:"dd/MM/yyyy"}}</td>
-                <td>{{em.gender | gender}}</td>
-                <td>{{em.salary | currency:$:3}}</td>
+                <td>{{em.gender | lowercase}}</td>
+                <td ng-hide="hideSalary">{{em.salary | currency:$:3}}</td>
+                <td ng-show="hideSalary">#######</td>
                 <td>{{em.city | uppercase}}</td>
             </tr>
         </tbody>
