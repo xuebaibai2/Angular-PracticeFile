@@ -8,24 +8,24 @@
     <script src="Scripts/script.js"></script>
 </head>
 <body>
+    Rows to display: <input type="number" step="1" min="0" max="5" ng-model="rowLimit" />
     <table>
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Likes</th>
-                <th>Dislikes</th>
-                <th>Like/Dislikes</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Salary (number) </th>
+                <th>Salary (currency)</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="technology in technologies">
-                <td>{{technology.name}}</td>
-                <td>{{technology.likes}}</td>
-                <td>{{technology.dislikes}}</td>
-                <td>
-                    <input type="button" value="Like" ng-click="incrementLikes(technology)" />
-                    <input type="button" value="Dislike" ng-click="incrementDislikes(technology)" />
-                </td>
+            <tr ng-repeat="em in employees | limitTo:rowLimit">
+                <td>{{em.name | uppercase}}</td>
+                <td>{{em.dateOfBirth | date:"dd/MM/yyyy"}}</td>
+                <td>{{em.gender | lowercase}}</td>
+                <td>{{em.salary | number:3}}</td>
+                <td>{{em.salary | currency:"":4}}</td>
             </tr>
         </tbody>
     </table>
