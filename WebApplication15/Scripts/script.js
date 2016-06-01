@@ -14,7 +14,17 @@ var myApp = angular
 
                 $scope.employees = employees;
 
-                
+                $scope.search = function (item) {
+                    if ($scope.searchText == undefined) {
+                        return true;
+                    } else {
+                        if (item.name.toLowerCase().indexOf($scope.searchText.toLowerCase()) != -1 || 
+                            item.city.toLowerCase().indexOf($scope.searchText.toLowerCase()) != -1) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
 
 
             });
