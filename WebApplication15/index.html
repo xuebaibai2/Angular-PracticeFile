@@ -9,23 +9,15 @@
 </head>
 <body>
 
-    <table>
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Gender</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="em in employees">
-                <td>{{em.firstName}}</td>
-                <td>{{em.lastName}}</td>
-                <td>{{em.gender}}</td>
-                <td>{{em.salary}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <ul>
+        <li ng-repeat="ct in countries">
+            {{ct.name}}
+            <ul>
+                <li ng-repeat="city in ct.cities">
+                    {{city.name}}
+                </li>
+            </ul>
+        </li>
+    </ul>
 </body>
 </html>
