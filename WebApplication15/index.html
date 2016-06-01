@@ -9,25 +9,26 @@
     <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>
-    
+    Search: <input type="text" placeholder="Search employees" ng-model="searchText.city"/>
+    <br />
     <table>
         <thead>
             <tr>
-                <th ng-click="sortData('name')">Name<div ng-class="getSortClass('name')"></div></th>
-                <th ng-click="sortData('dateOfBirth')">Date of Birth<div ng-class="getSortClass('dateOfBirth')"></div></th>
-                <th ng-click="sortData('gender')">Gender<div ng-class="getSortClass('gender')"></div></th>
-                <th ng-click="sortData('salary')">Salary (number)<div ng-class="getSortClass('salary')"></div></th>
-                <th ng-click="sortData('salary')">Salary (currency)<div ng-class="getSortClass('salary')"></div></th>
-                
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Salary</th>
+                <th>City</th>
+
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="em in employees | orderBy:sortColumn:reverseSort">
-                <td>{{em.name | uppercase}}</td>
+            <tr ng-repeat="em in employees | filter:searchText">
+                <td>{{em.name}}</td>
                 <td>{{em.dateOfBirth | date:"dd/MM/yyyy"}}</td>
                 <td>{{em.gender | lowercase}}</td>
-                <td>{{em.salary | number:3}}</td>
-                <td>{{em.salary | currency:"":4}}</td>
+                <td>{{em.salary | currency:$:3}}</td>
+                <td>{{em.city | uppercase}}</td>
             </tr>
         </tbody>
     </table>
