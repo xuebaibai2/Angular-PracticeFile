@@ -6,26 +6,23 @@
     <!--<script src="Scripts/angular.min.js"></script>-->
     <script src="Scripts/angular.js"></script>
     <script src="Scripts/script.js"></script>
+    <link href="css/style.css" rel="stylesheet" />
 </head>
 <body>
-    Order By: <select ng-model="sortColumn">
-                  <option value="name">Name ASC</option>
-                  <option value="gender">Gender ASC</option>
-                  <option value="dateOfBirth">Date of Birth ASC</option>
-                  <option value="salary">Salary ASC</option>
-    </select>
+    
     <table>
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Date of Birth</th>
-                <th>Gender</th>
-                <th>Salary (number) </th>
-                <th>Salary (currency)</th>
+                <th ng-click="sortData('name')">Name<div ng-class="getSortClass('name')"></div></th>
+                <th ng-click="sortData('dateOfBirth')">Date of Birth<div ng-class="getSortClass('dateOfBirth')"></div></th>
+                <th ng-click="sortData('gender')">Gender<div ng-class="getSortClass('gender')"></div></th>
+                <th ng-click="sortData('salary')">Salary (number)<div ng-class="getSortClass('salary')"></div></th>
+                <th ng-click="sortData('salary')">Salary (currency)<div ng-class="getSortClass('salary')"></div></th>
+                
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="em in employees | orderBy:sortColumn">
+            <tr ng-repeat="em in employees | orderBy:sortColumn:reverseSort">
                 <td>{{em.name | uppercase}}</td>
                 <td>{{em.dateOfBirth | date:"dd/MM/yyyy"}}</td>
                 <td>{{em.gender | lowercase}}</td>
