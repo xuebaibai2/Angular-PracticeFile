@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="anchorscroll.html" />
+    <Content Include="countrycities.html" />
+    <Content Include="CountryService.asmx" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -91,6 +93,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="City.cs" />
+    <Compile Include="Country.cs" />
+    <Compile Include="CountryService.asmx.cs">
+      <DependentUpon>CountryService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeService.asmx.cs">
       <DependentUpon>EmployeeService.asmx</DependentUpon>
