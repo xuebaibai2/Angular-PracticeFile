@@ -66,9 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="anchorscroll.html" />
-    <Content Include="countrycities.html" />
-    <Content Include="CountryService.asmx" />
+    <Content Include="index.html" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -79,36 +77,29 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\style.css" />
-    <Content Include="employeeList.html" />
-    <Content Include="EmployeeService.asmx" />
-    <Content Include="employeeTable.html" />
     <Content Include="img\testimg.jpg" />
-    <Content Include="index.html" />
-    <Content Include="Scripts\anchorscroll.js" />
+    <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\filter.js" />
     <Content Include="Scripts\script.js" />
-    <Content Include="Scripts\stringService.js" />
+    <Content Include="templates\studentDetail.html" />
+    <Content Include="StudentService.asmx" />
+    <Content Include="templates\courses.html" />
+    <Content Include="templates\home.html" />
+    <Content Include="templates\students.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="City.cs" />
-    <Compile Include="Country.cs" />
-    <Compile Include="CountryService.asmx.cs">
-      <DependentUpon>CountryService.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeService.asmx.cs">
-      <DependentUpon>EmployeeService.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Student.cs" />
+    <Compile Include="StudentService.asmx.cs">
+      <DependentUpon>StudentService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
