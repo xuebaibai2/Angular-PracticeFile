@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="anchorscroll.html" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -81,6 +82,7 @@
     <Content Include="employeeTable.html" />
     <Content Include="img\testimg.jpg" />
     <Content Include="index.html" />
+    <Content Include="Scripts\anchorscroll.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\filter.js" />
