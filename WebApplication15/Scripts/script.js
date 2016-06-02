@@ -7,19 +7,19 @@ var app = angular
                      $routeProvider
                          .when("/home", {
                              templateUrl: "Templates/home.html",
-                             controller: "homeController"
+                             controller: "homeController as hc"
                          })
                          .when("/courses", {
                              templateUrl: "Templates/courses.html",
-                             controller: "coursesController"
+                             controller: "coursesController as cc"
                          })
                          .when("/students", {
                              templateUrl: "Templates/students.html",
-                             controller: "studentsController"
+                             controller: "studentsController as sc"
                          })
                          .when("/students/:id", {
                              templateUrl: "Templates/studentDetail.html",
-                             controller: "studentDetailsController"
+                             controller: "studentDetailsController as sdc"
                          })
                          //Default route
                          .otherwise({
@@ -27,25 +27,27 @@ var app = angular
                          })
                      $locationProvider.html5Mode(true);
                  })
-                 .controller("homeController", function ($scope) {
-                     $scope.message = "Home Page";
+                 .controller("homeController", function () {
+                     this.message = "Home Page";
                  })
-                 .controller("coursesController", function ($scope) {
-                     $scope.courses = ["C#", "VB", "JAVA", "Javascript", "Swift"];
+                 .controller("coursesController", function () {
+                     this.courses = ["C#", "VB", "JAVA", "Javascript", "Swift"];
                  })
-                 .controller("studentsController", function ($scope, $http) {
+                 .controller("studentsController", function ($http) {
+                     var viewModel = this;
                      $http.get("StudentService.asmx/GetAllStudents")
                      .then(function (res) {
-                         $scope.students = res.data;
+                         viewModel.students = res.data;
                      });
                  })
-                 .controller("studentDetailsController", function ($scope, $http, $routeParams) {
+                 .controller("studentDetailsController", function ($http, $routeParams) {
+                     var viewModel = this;
                      $http({
                          url: "StudentService.asmx/GetStudent",
                          params: { id: $routeParams.id },
                          method: "get"
                      })
                      .then(function (res) {
-                         $scope.student = res.data;
+                         viewModel.student = res.data;
                      });
                  });
