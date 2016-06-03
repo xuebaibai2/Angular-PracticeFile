@@ -3,18 +3,25 @@
 
 var app = angular
                  .module("app", ["ngRoute"])
-                 .config(function ($routeProvider,$locationProvider) {
+                 .config(function ($routeProvider, $locationProvider) {
+                     $routeProvider.caseInsensitiveMatch = true;
                      $routeProvider
                          .when("/home", {
                              templateUrl: "Templates/home.html",
-                             controller: "homeController as hc"
+                             controller: "homeController",
+                             controllerAs: "hc"
                          })
                          .when("/courses", {
                              templateUrl: "Templates/courses.html",
-                             controller: "coursesController as cc"
+                             controller: "coursesController",
+                             controllerAs: "cc"
                          })
                          .when("/students", {
                              templateUrl: "Templates/students.html",
+                             controller: "studentsController as sc"
+                         })
+                         .when("/inline", {
+                             template: "<h1>This is not a html page but a inline template</h1>",
                              controller: "studentsController as sc"
                          })
                          .when("/students/:id", {
@@ -25,6 +32,7 @@ var app = angular
                          .otherwise({
                              redirectTo: "/home"
                          })
+
                      $locationProvider.html5Mode(true);
                  })
                  .controller("homeController", function () {
@@ -33,8 +41,12 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB", "JAVA", "Javascript", "Swift"];
                  })
-                 .controller("studentsController", function ($http) {
+                 .controller("studentsController", function ($http, $route) {
                      var viewModel = this;
+                     viewModel.reloadData = function () {
+                         $route.reload();
+                     }
+
                      $http.get("StudentService.asmx/GetAllStudents")
                      .then(function (res) {
                          viewModel.students = res.data;
