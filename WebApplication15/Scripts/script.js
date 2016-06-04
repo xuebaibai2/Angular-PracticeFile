@@ -18,7 +18,15 @@ var app = angular
                          })
                          .when("/students", {
                              templateUrl: "Templates/students.html",
-                             controller: "studentsController as sc"
+                             controller: "studentsController as sc",
+                             resolve: {
+                                 studentList: function ($http) {
+                                     return $http.get("StudentService.asmx/GetAllStudents")
+                                                 .then(function (res) {
+                                                     return res.data;
+                                                 });
+                                                }
+                             }
                          })
                          .when("/inline", {
                              template: "<h1>This is not a html page but a inline template</h1>",
@@ -45,7 +53,7 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB", "JAVA", "Javascript", "Swift"];
                  })
-                 .controller("studentsController", function ($http, $route, $scope, $location) {
+                 .controller("studentsController", function (studentList, $route, $scope, $location) {
 
                      //AngularJS cancel route change
                      //When route navigation occurs in an Angular application, the following events are triggered
@@ -73,11 +81,11 @@ var app = angular
                      viewModel.reloadData = function () {
                          $route.reload();
                      }
-
-                     $http.get("StudentService.asmx/GetAllStudents")
-                     .then(function (res) {
-                         viewModel.students = res.data;
-                     });
+                     viewModel.students = studentList;
+                     //$http.get("StudentService.asmx/GetAllStudents")
+                     //.then(function (res) {
+                     //    viewModel.students = res.data;
+                     //});
                  })
                  .controller("studentDetailsController", function ($http, $routeParams) {
                      var viewModel = this;
