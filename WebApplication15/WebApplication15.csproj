@@ -89,6 +89,7 @@
     <Content Include="templates\studentParent.html" />
     <Content Include="templates\students.html" />
     <Content Include="templates\studentsSearch.html" />
+    <Content Include="templates\studentsTotal.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

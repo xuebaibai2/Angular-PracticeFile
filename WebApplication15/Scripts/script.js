@@ -45,21 +45,34 @@ var app = angular
                          })
                          .state("studentParent.students", {
                              url: "/",
-                             templateUrl: "Templates/students.html",
-                             controller: "studentsController as sc",
-                             resolve: {
-                                 studentList: function ($http) {
-                                     return $http.get("StudentService.asmx/GetAllStudents")
-                                                 .then(function (res) {
-                                                     return res.data;
-                                                 });
+                             views: {
+                                 "studentData": {
+                                     templateUrl: "Templates/students.html",
+                                     controller: "studentsController as sc",
+                                     resolve: {
+                                         studentList: function ($http) {
+                                             return $http.get("StudentService.asmx/GetAllStudents")
+                                                         .then(function (res) {
+                                                             return res.data;
+                                                         });
+                                         }
+                                     }
+                                 },
+                                 "totalData": {
+                                     templateUrl: "Templates/studentsTotal.html",
+                                     controller: "studentTotalController as stc",
                                  }
-                             }
+                             },
                          })
                          .state("studentParent.studentDetails", {
                              url: "/:id",
-                             templateUrl: "Templates/studentDetail.html",
-                             controller: "studentDetailsController as sdc"
+                             views: {
+                                 "studentData": {
+                                     templateUrl: "Templates/studentDetail.html",
+                                     controller: "studentDetailsController as sdc"
+                                 }
+                             },
+
                          })
                          .state("inline", {
                              url: "/inline",
@@ -105,6 +118,9 @@ var app = angular
                      viewModel.students = studentList;
                      viewModel.studentTotals = studentTotals;
                  })
+                 .controller("studentTotalController", function (studentTotals) {
+                     this.total = studentTotals.total;
+                 })
                  .controller("studentDetailsController", function ($http, $stateParams) {
                      var viewModel = this;
                      $http({
@@ -115,6 +131,7 @@ var app = angular
                      .then(function (res) {
                          viewModel.student = res.data;
                      });
+
                  })
                  .controller("studentSearchController", function ($http, $stateParams) {
                      var viewModel = this;
