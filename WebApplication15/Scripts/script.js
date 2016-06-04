@@ -28,8 +28,23 @@ var app = angular
                                  customData2: "Courses State Custom Data 2"
                              }
                          })
-                         .state("students", {
+                         .state("studentParent", {
                              url: "/students",
+                             controller: "studentParentController",
+                             controllerAs: "stdParentCtrl",
+                             templateUrl: "Templates/studentParent.html",
+                             resolve: {
+                                 studentTotals: function ($http) {
+                                     return $http.get("StudentService.asmx/GetStudentTotals")
+                                             .then(function (response) {
+                                                 return response.data;
+                                             })
+                                 }
+                             },
+                             abstract: true
+                         })
+                         .state("studentParent.students", {
+                             url: "/",
                              templateUrl: "Templates/students.html",
                              controller: "studentsController as sc",
                              resolve: {
@@ -41,15 +56,15 @@ var app = angular
                                  }
                              }
                          })
+                         .state("studentParent.studentDetails", {
+                             url: "/:id",
+                             templateUrl: "Templates/studentDetail.html",
+                             controller: "studentDetailsController as sdc"
+                         })
                          .state("inline", {
                              url: "/inline",
                              template: "<h1>This is not a html page but a inline template</h1>",
                              controller: "inlineController as ic"
-                         })
-                         .state("studentDetails", {
-                             url: "/students/:id",
-                             templateUrl: "Templates/studentDetail.html",
-                             controller: "studentDetailsController as sdc"
                          })
                          .state("studentSearch", {
                              url: "/studentsSearch/:name",
@@ -71,7 +86,12 @@ var app = angular
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB", "JAVA", "Javascript", "Swift"];
                  })
-                 .controller("studentsController", function (studentList, $state, $location) {
+                 .controller("studentParentController", function (studentTotals) {
+                     this.males = studentTotals.males;
+                     this.females = studentTotals.females;
+                     this.total = studentTotals.total;
+                 })
+                 .controller("studentsController", function (studentList, $state, $location, studentTotals) {
 
                      var viewModel = this;
 
@@ -83,6 +103,7 @@ var app = angular
                          $state.reload();
                      }
                      viewModel.students = studentList;
+                     viewModel.studentTotals = studentTotals;
                  })
                  .controller("studentDetailsController", function ($http, $stateParams) {
                      var viewModel = this;

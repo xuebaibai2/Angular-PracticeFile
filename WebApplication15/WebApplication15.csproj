@@ -86,6 +86,7 @@
     <Content Include="StudentService.asmx" />
     <Content Include="templates\courses.html" />
     <Content Include="templates\home.html" />
+    <Content Include="templates\studentParent.html" />
     <Content Include="templates\students.html" />
     <Content Include="templates\studentsSearch.html" />
     <Content Include="Web.config" />
@@ -102,6 +103,7 @@
       <DependentUpon>StudentService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="StudentTotals.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

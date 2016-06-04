@@ -15,6 +15,38 @@ namespace WebApplication15
     {
 
         [WebMethod]
+        public void GetStudentTotals()
+        {
+            StudentTotals totals = new StudentTotals();
+
+            string cs = ConfigurationManager.ConnectionStrings["PracticeDB"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                SqlCommand cmd = new SqlCommand("SELECT COALESCE(Gender, 'GrandTotal') AS Gender, COUNT(*) AS Total FROM tblStudents GROUP BY ROLLUP(Gender)", con);
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    switch (rdr["Gender"].ToString())
+                    {
+                        case "Male":
+                            totals.males = Convert.ToInt32(rdr["Total"]);
+                            break;
+                        case "Female":
+                            totals.females = Convert.ToInt32(rdr["Total"]);
+                            break;
+                        default:
+                            totals.total = Convert.ToInt32(rdr["Total"]);
+                            break;
+                    }
+                }
+            }
+
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(totals));
+        }
+
+        [WebMethod]
         public void GetAllStudentsByName(string name)
         {
             List<Student> listStudents = new List<Student>();
