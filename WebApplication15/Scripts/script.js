@@ -2,21 +2,34 @@
 /// <reference path="angular-route.js" />
 
 var app = angular
-                 .module("app", ["ngRoute"])
-                 .config(function ($routeProvider, $locationProvider) {
-                     $routeProvider.caseInsensitiveMatch = true;
-                     $routeProvider
-                         .when("/home", {
+                 .module("app", ["ui.router"])
+                 .config(function ($stateProvider, $urlMatcherFactoryProvider, $urlRouterProvider, $locationProvider) {
+                     $urlMatcherFactoryProvider.caseInsensitive(true);
+                     //Default route
+                     $urlRouterProvider.otherwise("/home");
+                     $stateProvider
+                         .state("home", {
+                             url: "/home",
                              templateUrl: "Templates/home.html",
                              controller: "homeController",
-                             controllerAs: "hc"
+                             controllerAs: "hc",
+                             data: {
+                                 customData1: "Home State Custom Data 1",
+                                 customData2: "Home State Custom Data 2"
+                             }
                          })
-                         .when("/courses", {
+                         .state("courses", {
+                             url: "/courses",
                              templateUrl: "Templates/courses.html",
                              controller: "coursesController",
-                             controllerAs: "cc"
+                             controllerAs: "cc",
+                             data: {
+                                 customData1: "Courses State Custom Data 1",
+                                 customData2: "Courses State Custom Data 2"
+                             }
                          })
-                         .when("/students", {
+                         .state("students", {
+                             url: "/students",
                              templateUrl: "Templates/students.html",
                              controller: "studentsController as sc",
                              resolve: {
@@ -25,85 +38,69 @@ var app = angular
                                                  .then(function (res) {
                                                      return res.data;
                                                  });
-                                                }
+                                 }
                              }
                          })
-                         .when("/inline", {
+                         .state("inline", {
+                             url: "/inline",
                              template: "<h1>This is not a html page but a inline template</h1>",
                              controller: "inlineController as ic"
                          })
-                         .when("/students/:id", {
+                         .state("studentDetails", {
+                             url: "/students/:id",
                              templateUrl: "Templates/studentDetail.html",
                              controller: "studentDetailsController as sdc"
                          })
-                         .when("/studentsSearch/:name?", {
+                         .state("studentSearch", {
+                             url: "/studentsSearch/:name",
                              templateUrl: "Templates/studentsSearch.html",
                              controller: "studentSearchController as ssc"
-                         })
-                         //Default route
-                         .otherwise({
-                             redirectTo: "/home"
                          })
 
                      $locationProvider.html5Mode(true);
                  })
-                 .controller("homeController", function () {
+                 .controller("homeController", function ($state) {
                      this.message = "Home Page";
+
+                     this.homeCustomData1 = $state.current.data.customData1;
+                     this.homeCustomData2 = $state.current.data.customData2;
+
+                     this.coursesCustomData1 = $state.get("courses").data.customData1;
+                     this.coursesCustomData2 = $state.get("courses").data.customData2;
                  })
                  .controller("coursesController", function () {
                      this.courses = ["C#", "VB", "JAVA", "Javascript", "Swift"];
                  })
-                 .controller("studentsController", function (studentList, $route, $scope, $location) {
-
-                     //AngularJS cancel route change
-                     //When route navigation occurs in an Angular application, the following events are triggered
-                     //$locationChangeStart
-                     //$routeChangeStart
-                     //$locationChangeSuccess
-                     //$routeChangeSuccess
-                     //$scope.$on("$locationChangeStart", function (event, next, current) {
-                     //    if (!confirm("Are you sure you want to navigate away from this page to " + next)) {
-                     //        event.preventDefault();
-                     //    }
-                     //});
-
+                 .controller("studentsController", function (studentList, $state, $location) {
 
                      var viewModel = this;
 
                      viewModel.searchStudent = function () {
-                         if (viewModel.name) {
-                             $location.url("/studentsSearch/" + viewModel.name);
-                         } else {
-                             $location.url("/studentsSearch");
-                         }
+                         $state.go("studentSearch", { name: viewModel.name });
                      }
 
                      viewModel.reloadData = function () {
-                         $route.reload();
+                         $state.reload();
                      }
                      viewModel.students = studentList;
-                     //$http.get("StudentService.asmx/GetAllStudents")
-                     //.then(function (res) {
-                     //    viewModel.students = res.data;
-                     //});
                  })
-                 .controller("studentDetailsController", function ($http, $routeParams) {
+                 .controller("studentDetailsController", function ($http, $stateParams) {
                      var viewModel = this;
                      $http({
                          url: "StudentService.asmx/GetStudent",
-                         params: { id: $routeParams.id },
+                         params: { id: $stateParams.id },
                          method: "get"
                      })
                      .then(function (res) {
                          viewModel.student = res.data;
                      });
                  })
-                 .controller("studentSearchController", function ($http, $routeParams) {
+                 .controller("studentSearchController", function ($http, $stateParams) {
                      var viewModel = this;
-                     if ($routeParams.name) {
+                     if ($stateParams.name) {
                          $http({
                              url: "StudentService.asmx/GetAllStudentsByName",
-                             params: { name: $routeParams.name },
+                             params: { name: $stateParams.name },
                              method: "get"
                          })
                          .then(function (res) {
@@ -115,4 +112,5 @@ var app = angular
                                   viewModel.students = res.data;
                               });
                      }
-                 });
+                 })
+;
